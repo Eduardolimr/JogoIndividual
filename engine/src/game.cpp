@@ -154,6 +154,7 @@ void Game::run()
                         m_state = State::exit_loop;
                         break;
                     default:
+                        m_input_manager.gather_input(evt);
                         break;
                 }
             }
@@ -163,6 +164,8 @@ void Game::run()
             SDL_RenderClear(m_canvas);
             m_scene->draw();
             SDL_RenderPresent(m_canvas);
+
+            m_input_manager.clear_input();
         }
 
         INFO("Cleaning up resources...");
@@ -239,7 +242,11 @@ bool Game::handle_scene_changes()
                  (m_last_scene ? m_last_scene->name() : "NULL") << " to " <<
                  m_scene->name() << "...");
 
-            if(m_last_scene) m_last_scene->shutdown();
+            if(m_last_scene)
+            {
+                m_last_scene->shutdown();
+                m_last_scene->assets_manager().shutdown();
+            }
 
             m_scene->init();
             m_scene->setup();
