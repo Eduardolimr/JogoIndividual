@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "gameobject.hpp"
 #include "assets_manager.hpp"
@@ -17,6 +18,7 @@ public:
         playing,
         invalid
     };
+    const static int n_layers = 100;
 
     Scene() : Scene("", State::invalid) {}
     Scene(std::string name, State _state=State::created)
@@ -44,6 +46,7 @@ protected:
 
     State m_state;
     AssetsManager m_assets_manager;
+    std::vector<GameObject *> m_layers[Scene::n_layers];
 };
 
 }

@@ -1,6 +1,7 @@
-#include "scene.hpp"
+#include <algorithm>
 
 #include "log.h"
+#include "scene.hpp"
 
 using namespace engine;
 
@@ -16,8 +17,23 @@ bool Scene::add_game_object(GameObject & obj)
         WARN("Game object " << id << " already exists!");
         return false;
     }
+    if (obj.get_layer() >= Scene::n_layers)
+    {
+        WARN("Game object " << id << " has invalid layer " << obj.get_layer()
+             << "\nLayer must be less than " << Scene::n_layers);
+        return false;
+    }
 
     m_objects[id] = &obj;
+    m_layers[obj.get_layer()].push_back(&obj);
+    std::sort(m_layers[obj.get_layer()].begin(), m_layers[obj.get_layer()].end(),
+         [](const GameObject * a, const GameObject * b) -> bool
+         {
+             if (a->get_layer_order() == b->get_layer_order())
+                 return a->name() > b->name();
+             return a->get_layer_order() < b->get_layer_order();
+         }
+    );
     return true;
 }
 
@@ -42,6 +58,15 @@ bool Scene::remove_game_object(const std::string & id)
         return false;
     }
 
+    int layer = m_objects[id]->get_layer();
+    int i = 0;
+    for(auto obj: m_layers[layer]) {
+        if (obj->name() == id) {
+            m_layers[layer].erase(m_layers[layer].begin() + i);
+            break;
+        }
+        i++;
+    }
     m_objects.erase(id);
     return true;
 }
@@ -89,18 +114,18 @@ bool Scene::shutdown()
 
 void Scene::update()
 {
-    for (auto id_obj: m_objects)
-    {
-        auto obj = id_obj.second;
-        if (obj->state() == GameObject::State::enabled) obj->update();
+    for (auto layer: m_layers) {
+        for (auto obj: layer) {
+            if (obj->state() == GameObject::State::enabled) obj->update();
+        }
     }
 }
 
 void Scene::draw()
 {
-    for (auto id_obj: m_objects)
-    {
-        auto obj = id_obj.second;
-        if (obj->state() == GameObject::State::enabled) obj->draw();
+     for (auto layer: m_layers) {
+        for (auto obj: layer) {
+            if (obj->state() == GameObject::State::enabled) obj->draw();
+        }
     }
 }
