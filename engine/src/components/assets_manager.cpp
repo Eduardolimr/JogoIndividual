@@ -1,9 +1,13 @@
 #include "assets_manager.hpp"
-
 #include "log.h"
 #include "sdl_log.h"
 #include "game.hpp"
 
+#include <string>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
 using namespace engine;
 
 bool AssetsManager::shutdown()
@@ -81,6 +85,25 @@ Image * AssetsManager::load_image(std::string path, bool use_base)
     return m_images[path];
 }
 
+const char * AssetsManager::load_text(std::string path, bool use_base){
+    std::string data;
+    if(use_base)
+        path = m_base_path + "text/" + path;
+
+    if(m_text.find(path) == m_text.end()){
+        ifstream input(path);
+        if(input.is_open()){
+            while(!input.eof()){
+                getline(input, data);
+            }
+        }
+        input.close();
+        const char * text = data.c_str();
+        m_text[path] = text;
+    }
+    return m_text[path];
+}
+
 TTF_Font * AssetsManager::load_font(std::string path, int size, bool use_base)
 {
     if(use_base)
@@ -99,7 +122,7 @@ TTF_Font * AssetsManager::load_font(std::string path, int size, bool use_base)
             SDL_TTF_ERROR("Could not load font from path " << path);
             return NULL;
         }
-
+    auto path_size = std::make_pair(path, size);
         m_fonts[path_size] = m_font;
     }
 

@@ -27,10 +27,11 @@ public:
     TTF_Font *  load_font(std::string path, int size, bool use_base=true);
     Mix_Music * load_music(std::string path, bool use_base=true);
     Mix_Chunk * load_sound(std::string path, bool use_base=true);
+    const char * load_text(std::string path, bool use_base=true);
 
 private:
     std::string m_base_path;
-
+    std::unordered_map<std::string, const char *> m_text;
     std::unordered_map<std::string, Image *> m_images;
     std::map<std::pair<std::string, int>, TTF_Font * > m_fonts;
     std::unordered_map<std::string, Mix_Music *> m_musics;

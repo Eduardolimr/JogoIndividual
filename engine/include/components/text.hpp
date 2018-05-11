@@ -14,13 +14,13 @@ namespace engine{
     class TextComponent: public Component{
     public:
         TextComponent(
-            std::string  text="",
+            std::string  text_path="",
             std::string  font_path="",
             int          font_size=42,
             Color        color=Color(),
             Color        background_color=Color(0x0, 0x0, 0x0, 0x00)
-        ) : Component(), m_text(text), m_font_path(font_path),
-            m_font_size(font_size), m_color(color),
+        ) : Component(), m_text(NULL), m_text_path(text_path),
+            m_font_path(font_path), m_font_size(font_size), m_color(color),
             m_background_color(background_color), m_texture(NULL), m_font(NULL),
             m_w(0), m_h(0) {}
 
@@ -34,7 +34,8 @@ namespace engine{
         inline void disable_high_quality() { m_high_quality = false; }
 
     protected:
-        std::string m_text;
+        const char * m_text;
+        std::string m_text_path;
         std::string m_font_path;
         int         m_font_size;
         bool        m_high_quality;

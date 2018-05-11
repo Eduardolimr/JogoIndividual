@@ -21,16 +21,10 @@ int main(int, char**)
     // Setup scenes
     Scene menu("Main Menu");
 
-    auto player = GameObject("Player", 1, 0);
-    player.set_position(100, 100);
-
-    auto playerImage = ImageComponent("image.png");
-    player.add_component(playerImage);
-
     auto title = GameObject("Title", 1, 0);
-    title.set_position(250, 250);
+    title.set_position(10, 10);
 
-    auto title_text = TextComponent("UnB - FGA", "font.ttf", 30,
+    auto title_text = TextComponent("teste.txt", "font.ttf", 30,
                                     Color(0x00, 0x00, 0x00));
 
     auto bg_music = AudioComponent("music.ogg", true);
@@ -41,31 +35,7 @@ int main(int, char**)
     Move move;
     title.add_component(move);
 
-
-    GameObject boy("Boy", 2, 0);
-    boy.set_position(20, 20);
-
-    AnimationControllerComponent animCtrl;
-
-    AnimationComponent boyAnimation("boy.png", 3, 2, 0.5, true);
-    boyAnimation.set_end_frame(2);
-    animCtrl.add_animation("running right", boyAnimation);
-
-    AnimationComponent boyAnimation2("boy.png", 3, 2, 1.0, true);
-    boyAnimation2.set_frame_range(3, 5);
-    animCtrl.add_animation("running left", boyAnimation2);
-
-    MoveSideToSide movesidetoside;
-
-    boy.add_component(movesidetoside);
-    boy.add_component(boyAnimation);
-    boy.add_component(boyAnimation2);
-    boy.add_component(animCtrl);
-
-
-    menu.add_game_object(player);
     menu.add_game_object(title);
-    menu.add_game_object(boy);
 
     Game::instance.add_scene(menu);
 
