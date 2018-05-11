@@ -43,6 +43,12 @@ bool AssetsManager::shutdown()
     }
     m_sounds.clear();
 
+    INFO("Dealocate texts");
+    for(auto id_text: m_text){
+        id_text.second = "";
+    }
+    m_text.clear();
+
     return true;
 }
 
@@ -85,21 +91,22 @@ Image * AssetsManager::load_image(std::string path, bool use_base)
     return m_images[path];
 }
 
-const char * AssetsManager::load_text(std::string path, bool use_base){
+std::string AssetsManager::load_text(std::string path, bool use_base){
     std::string data;
     if(use_base)
         path = m_base_path + "text/" + path;
 
     if(m_text.find(path) == m_text.end()){
-        ifstream input(path);
+        ifstream input;
+        input.open(path);
         if(input.is_open()){
             while(!input.eof()){
                 getline(input, data);
             }
         }
         input.close();
-        const char * text = data.c_str();
-        m_text[path] = text;
+        INFO(data);
+        m_text[path] = data;
     }
     return m_text[path];
 }

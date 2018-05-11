@@ -4,6 +4,8 @@
 #include "log.h"
 #include "sdl_log.h"
 
+#include <string>
+
 using namespace engine;
 
 bool TextComponent::init()
@@ -25,7 +27,7 @@ bool TextComponent::init()
     m_text = Game::instance.assets_manager().load_text(m_text_path);
 
     if(m_font == NULL) return false;
-    if(m_text == NULL) return false;
+    if(m_text.empty()) return false;
 
     SDL_Color color = {m_color.r, m_color.g, m_color.b, m_color.a};
     SDL_Color bg_color = {m_background_color.r, m_background_color.g,
@@ -36,19 +38,19 @@ bool TextComponent::init()
     if (m_high_quality && bg_color.a == 0x00)
     {
         surface = TTF_RenderText_Blended(
-            m_font, m_text, color
+            m_font, m_text.c_str(), color
         );
     }
     else if (m_high_quality)
     {
         surface = TTF_RenderText_Shaded(
-            m_font, m_text, color, bg_color
+            m_font, m_text.c_str(), color, bg_color
         );
     }
     else
     {
         surface = TTF_RenderText_Solid(
-            m_font, m_text, color
+            m_font, m_text.c_str(), color
         );
     }
 

@@ -24,7 +24,7 @@ int main(int, char**)
     auto title = GameObject("Title", 1, 0);
     title.set_position(10, 10);
 
-    auto title_text = TextComponent("teste.txt", "font.ttf", 30,
+    auto title_text = TextComponent("test.txt", "font.ttf", 30,
                                     Color(0x00, 0x00, 0x00));
 
     auto bg_music = AudioComponent("music.ogg", true);
