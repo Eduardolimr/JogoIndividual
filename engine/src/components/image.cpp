@@ -33,6 +33,11 @@ bool ImageComponent::init()
     return true;
 }
 
+void ImageComponent::change_pos(int pos_x, int pos_y){
+    m_image_rect.x = pos_x;
+    m_image_rect.y = pos_y;
+}
+
 bool ImageComponent::shutdown()
 {
     INFO("Shutdown ImageComponent");

@@ -17,6 +17,7 @@ namespace engine {
         virtual bool init();
         virtual bool shutdown();
         virtual void draw();
+        virtual void change_pos(int pos_x, int pos_y);
     protected:
         std::string m_path;
         int         m_w, m_h;

@@ -22,7 +22,7 @@ int main(int, char**)
     Scene menu("Main Menu");
 
     auto player = GameObject("Player", 1, 0);
-    player.set_position(100, 100);
+    player.set_position(0, 0);
 
     auto playerImage = ImageComponent("image.png");
     player.add_component(playerImage);
