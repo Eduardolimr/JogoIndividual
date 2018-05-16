@@ -28,7 +28,7 @@ int main(int, char**)
     title.set_position(250, 250);
 
     auto title_text = TextComponent("UnB - FGA", "font.ttf", 30,
-                                    Color(0x00, 0x00, 0x00));
+                                    Color(255, 255, 255));
 
     auto bg_music = AudioComponent("music.ogg", true);
 

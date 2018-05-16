@@ -21,7 +21,7 @@ class Move : public engine::CodeComponent
     void update()
     {
         auto dy = gravity;
-        
+        auto animCtrl = m_game_object->get_component<engine::AnimationControllerComponent>();
         if(engine::Game::instance.input_manager().is_button_down("w")){
             if (!is_moving)
             {
@@ -29,6 +29,13 @@ class Move : public engine::CodeComponent
                 upside_down = !upside_down;
             }
             is_moving = true;
+
+            if(!upside_down){
+                animCtrl->change_to("standing");
+            }
+            else{
+                animCtrl->change_to("standing_upside");
+            }
         }
 
         if(toggle && upside_down){
@@ -46,7 +53,6 @@ class Move : public engine::CodeComponent
 
 
         auto dx = 0;
-        auto animCtrl = m_game_object->get_component<engine::AnimationControllerComponent>();
         
         if (engine::Game::instance.input_manager().is_button_down("a")){
             dx = -2;
