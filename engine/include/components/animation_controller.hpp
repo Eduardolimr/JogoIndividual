@@ -21,6 +21,7 @@ public:
     void add_animation(std::string name, AnimationComponent & animation);
 
     void play_animation(std::string name, bool wait_to_finish=false);
+    void change_to(std::string name);
 
 private:
     std::unordered_map<std::string, AnimationComponent *> m_animations_map;

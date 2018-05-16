@@ -71,3 +71,21 @@ void AnimationControllerComponent::change_animations()
     animation->enable();
     animation->setup();
 }
+
+void AnimationControllerComponent::change_to(std::string name){
+    if(current_animation != name){
+        auto animation = m_animations_map[current_animation];
+        animation->disable();
+
+        if(name == "" || m_animations_map[name] == NULL){
+            INFO("Invalid animation!");
+        }else{
+
+            current_animation = name;
+
+            animation = m_animations_map[current_animation];
+            animation->enable();
+            animation->setup();
+        }
+    }
+}

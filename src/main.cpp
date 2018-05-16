@@ -21,11 +21,8 @@ int main(int, char**)
     // Setup scenes
     Scene menu("Main Menu");
 
-    auto player = GameObject("Player", 1, 0);
+    auto player = GameObject("Player", 2, 0);
     player.set_position(0, 0);
-
-    auto playerImage = ImageComponent("image.png");
-    player.add_component(playerImage);
 
     auto title = GameObject("Title", 1, 0);
     title.set_position(250, 250);
@@ -39,33 +36,38 @@ int main(int, char**)
     title.add_component(bg_music);
 
     Move move;
-    title.add_component(move);
-
-
-    GameObject boy("Boy", 2, 0);
-    boy.set_position(20, 20);
+    MoveSideToSide movesidetoside;
+    title.add_component(movesidetoside);
 
     AnimationControllerComponent animCtrl;
 
+    AnimationComponent boyAnimationStanding("boy.png", 3, 2, 0.5, true );
+    boyAnimationStanding.set_end_frame(0);
+    animCtrl.add_animation("standing", boyAnimationStanding);
+
     AnimationComponent boyAnimation("boy.png", 3, 2, 0.5, true);
     boyAnimation.set_end_frame(2);
-    animCtrl.add_animation("running right", boyAnimation);
+    animCtrl.add_animation("run_r", boyAnimation);
 
-    AnimationComponent boyAnimation2("boy.png", 3, 2, 1.0, true);
+    AnimationComponent boyAnimation2("boy.png", 3, 2, 0.5, true);
     boyAnimation2.set_frame_range(3, 5);
-    animCtrl.add_animation("running left", boyAnimation2);
+    animCtrl.add_animation("run_l", boyAnimation2);
 
-    MoveSideToSide movesidetoside;
+    AnimationComponent boyAnimation3("boy_upsidedown.png", 3, 2, 0.5, true);
+    boyAnimation3.set_end_frame(2);
+    animCtrl.add_animation("run_r_upside", boyAnimation3);
 
-    boy.add_component(movesidetoside);
-    boy.add_component(boyAnimation);
-    boy.add_component(boyAnimation2);
-    boy.add_component(animCtrl);
+    AnimationComponent boyAnimation4("boy_upsidedown.png", 3, 2, 0.5, true);
+    boyAnimation4.set_frame_range(3, 5);
+    animCtrl.add_animation("run_r_upside", boyAnimation4);
 
+    player.add_component(move);
+    player.add_component(boyAnimation3);
+    player.add_component(boyAnimation4);
+    player.add_component(animCtrl);
 
     menu.add_game_object(player);
     menu.add_game_object(title);
-    menu.add_game_object(boy);
 
     Game::instance.add_scene(menu);
 
