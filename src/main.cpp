@@ -45,6 +45,10 @@ int main(int, char**)
     boyAnimationStanding.set_end_frame(0);
     animCtrl.add_animation("standing", boyAnimationStanding);
 
+    AnimationComponent boyAnimationStandingUpside("boy_upsidedown.png", 3, 2 , 0.5, true);
+    boyAnimationStandingUpside.set_end_frame(0);
+    animCtrl.add_animation("standing_upside", boyAnimationStandingUpside);
+
     AnimationComponent boyAnimation("boy.png", 3, 2, 0.5, true);
     boyAnimation.set_end_frame(2);
     animCtrl.add_animation("run_r", boyAnimation);
@@ -55,13 +59,17 @@ int main(int, char**)
 
     AnimationComponent boyAnimation3("boy_upsidedown.png", 3, 2, 0.5, true);
     boyAnimation3.set_end_frame(2);
-    animCtrl.add_animation("run_r_upside", boyAnimation3);
+    animCtrl.add_animation("run_l_upside", boyAnimation3);
 
     AnimationComponent boyAnimation4("boy_upsidedown.png", 3, 2, 0.5, true);
     boyAnimation4.set_frame_range(3, 5);
     animCtrl.add_animation("run_r_upside", boyAnimation4);
 
     player.add_component(move);
+    player.add_component(boyAnimationStanding);
+    player.add_component(boyAnimationStandingUpside);
+    player.add_component(boyAnimation);
+    player.add_component(boyAnimation2);
     player.add_component(boyAnimation3);
     player.add_component(boyAnimation4);
     player.add_component(animCtrl);

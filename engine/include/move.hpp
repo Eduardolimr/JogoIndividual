@@ -11,16 +11,17 @@ class Move : public engine::CodeComponent
   public:
     Move() : engine::CodeComponent() {}
     double gravity = 2;
-    bool is_moving = true;
-    int relative_x = engine::Game::instance.window_size().first;
-    int relative_y = engine::Game::instance.window_size().second;
+    bool is_moving = true;  
     bool toggle = false;
     bool upside_down = false;
+
+    int relative_x = engine::Game::instance.window_size().first;
+    int relative_y = engine::Game::instance.window_size().second;
 
     void update()
     {
         auto dy = gravity;
-
+        
         if(engine::Game::instance.input_manager().is_button_down("w")){
             if (!is_moving)
             {
@@ -42,27 +43,47 @@ class Move : public engine::CodeComponent
             is_moving = false;
         }
 
-        if (is_moving)
-        {
-            m_game_object->y = dy;
-        }
-        INFO(m_game_object->y);
+
 
         auto dx = 0;
-
+        auto animCtrl = m_game_object->get_component<engine::AnimationControllerComponent>();
+        
         if (engine::Game::instance.input_manager().is_button_down("a")){
             dx = -2;
+            if(!upside_down){
+                animCtrl->change_to("run_l");
+            }
+            else{
+                animCtrl->change_to("run_l_upside");
+            }
         }
 
         if (engine::Game::instance.input_manager().is_button_down("d")){
             dx = 2;
+            if(!upside_down){
+                animCtrl->change_to("run_r");
+            }
+            else{
+                animCtrl->change_to("run_r_upside");
+            }
         }
         
         dx = m_game_object->x + dx;
         if (dx >= relative_x || dx < 0){
             dx = 0;
+            if(!upside_down){
+                animCtrl->change_to("standing");
+            }
+            else{
+                animCtrl->change_to("standing_upside");
+            }
         }
-        m_game_object->x = dx;
+        
+        m_game_object->x = dx; 
+        if (is_moving){
+            m_game_object->y = dy;
+        }
+        INFO(m_game_object->y);
     }
 };
 
