@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "typeindex": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "typeinfo": "cpp"
     }
 }

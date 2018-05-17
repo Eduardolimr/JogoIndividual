@@ -8,6 +8,11 @@
 #include "components/component.hpp"
 #include "./image.hpp"
 
+typedef struct tileset{
+    int x;
+    int y;
+}tileset;
+
 namespace engine{
     class TileMapComponent: public Component{
     public:
@@ -18,13 +23,14 @@ namespace engine{
 
         virtual bool init();
         virtual bool shutdown();
-        virtual void draw();
-        virtual void add_tile(std::string name, int pos_x, int pos_y);
+        virtual void add_tile(std::string name, int pos_x, int pox_y);
+        tileset get_tile(std::string name);
     protected:
         std::string m_path;
         int m_w, m_h;
 
-        std::map<std::string, ImageComponent> m_tilemap;
+        std::map<std::string, tileset> m_tilemap;
+        void create_tilemap();
     };
 }
 

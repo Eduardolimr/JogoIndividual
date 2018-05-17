@@ -4,41 +4,48 @@
 #include "log.h"
 #include "sdl_log.h"
 
+#include <string>
+
 using namespace engine;
 
 bool TileMapComponent::init(){
     INFO("Init TileMapComponent");
-
     if(m_path == ""){
         WARN("Invalid path for tilemap!");
         return false;
     }
+    create_tilemap();
     return true;
 }
 
 bool TileMapComponent::shutdown(){
     INFO("Shutdown TileMapComponent");
-
-    for(auto id: m_tilemap){
-        auto obj = id.second;
-        if (obj.shutdown() == false){
-            WARN("Could not shutdown tileset " << id.first);
-            return false;
-        }
-    }
     return true;
 }
 
 void TileMapComponent::add_tile(std::string name, int pos_x, int pos_y){
-    auto tile = ImageComponent(m_path);
-    tile.change_pos(pos_x, pos_y);
+    tileset t;
+    t.x = pos_x;
+    t.y = pos_y;
 
-    m_tilemap.insert( std::pair<std::string, ImageComponent>(name, tile) );
+    m_tilemap.insert(std::pair<std::string, tileset>(name, t));
 }
 
-void TileMapComponent::draw(){
-    for(auto id: m_tilemap){
-        auto tileset = id.second;
-        tileset.draw();
+tileset TileMapComponent::get_tile(std::string name){
+    auto search = m_tilemap.find(name);
+    if(search != m_tilemap.end()){
+        return search->second;
+    }
+    WARN("Tile does not exist!");
+    return m_tilemap.end()->second;
+}
+
+void TileMapComponent::create_tilemap(){
+    auto cont = 0;
+    for(auto pos_y = 0; pos_y <= 240; pos_y += 8){
+        for(auto pos_x = 0; pos_x <= 320; pos_x += 8){
+            INFO(std::to_string(cont));
+            add_tile(std::to_string(cont), pos_x, pos_y);
+        }
     }
 }

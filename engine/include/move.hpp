@@ -15,8 +15,8 @@ class Move : public engine::CodeComponent
     bool toggle = false;
     bool upside_down = false;
 
-    int relative_x = engine::Game::instance.window_size().first - 50;
-    int relative_y = engine::Game::instance.window_size().second - 50;
+    int relative_x = engine::Game::instance.window_size().first - 32;
+    int relative_y = engine::Game::instance.window_size().second - 32;
 
     void update()
     {
@@ -89,7 +89,6 @@ class Move : public engine::CodeComponent
         if (is_moving){
             m_game_object->y = dy;
         }
-        INFO(m_game_object->y);
     }
 };
 

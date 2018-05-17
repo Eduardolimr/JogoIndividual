@@ -6,10 +6,12 @@
 #include "components/animation.hpp"
 #include "components/animation_controller.hpp"
 #include "components/audio.hpp"
+#include "components/tilemap.hpp"
 
 #include "gameglobals.hpp"
 #include "movesidetoside.hpp"
 #include "move.hpp"
+#include "game_map.hpp"
 
 using namespace engine;
 
@@ -23,12 +25,12 @@ int main(int, char**)
 
     auto player = GameObject("Player", 2, 0);
     player.set_position(0, 0);
-    
-    auto bg_music = AudioComponent("music.ogg", true);
 
-    title.add_component(bg_music);
+    auto map = GameObject("Map", 2, 0);
 
     AnimationControllerComponent animCtrl;
+    Move move;
+    TileMapComponent tilemap("tiles.png");
 
     AnimationComponent boyAnimationStanding("sprites.png", 12, 16, 0.25, true );
     boyAnimationStanding.set_end_frame(0);
@@ -48,12 +50,13 @@ int main(int, char**)
 
     AnimationComponent boyAnimation3("sprites.png", 12, 16, 0.25, true);
     boyAnimation3.set_frame_range(6, 8);
-    animCtrl.add_animation("run_l_upside", boyAnimation3);
+    animCtrl.add_animation("run_r_upside", boyAnimation3);
 
     AnimationComponent boyAnimation4("sprites.png", 12, 16, 0.25, true);
     boyAnimation4.set_frame_range(9, 11);
-    animCtrl.add_animation("run_r_upside", boyAnimation4);
+    animCtrl.add_animation("run_l_upside", boyAnimation4);
 
+    map.add_component(tilemap);
     player.add_component(move);
     player.add_component(boyAnimationStanding);
     player.add_component(boyAnimationStandingUpside);
@@ -64,7 +67,7 @@ int main(int, char**)
     player.add_component(animCtrl);
 
     menu.add_game_object(player);
-    menu.add_game_object(title);
+    menu.add_game_object(map);
 
     Game::instance.add_scene(menu);
 
