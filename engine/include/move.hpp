@@ -15,8 +15,8 @@ class Move : public engine::CodeComponent
     bool toggle = false;
     bool upside_down = false;
 
-    int relative_x = engine::Game::instance.window_size().first;
-    int relative_y = engine::Game::instance.window_size().second;
+    int relative_x = engine::Game::instance.window_size().first - 50;
+    int relative_y = engine::Game::instance.window_size().second - 50;
 
     void update()
     {
@@ -55,7 +55,7 @@ class Move : public engine::CodeComponent
         auto dx = 0;
         
         if (engine::Game::instance.input_manager().is_button_down("a")){
-            dx = -2;
+            dx = -4;
             if(!upside_down){
                 animCtrl->change_to("run_l");
             }
@@ -65,7 +65,7 @@ class Move : public engine::CodeComponent
         }
 
         if (engine::Game::instance.input_manager().is_button_down("d")){
-            dx = 2;
+            dx = 4;
             if(!upside_down){
                 animCtrl->change_to("run_r");
             }

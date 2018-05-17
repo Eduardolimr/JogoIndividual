@@ -23,46 +23,35 @@ int main(int, char**)
 
     auto player = GameObject("Player", 2, 0);
     player.set_position(0, 0);
-
-    auto title = GameObject("Title", 1, 0);
-    title.set_position(250, 250);
-
-    auto title_text = TextComponent("UnB - FGA", "font.ttf", 30,
-                                    Color(255, 255, 255));
-
+    
     auto bg_music = AudioComponent("music.ogg", true);
 
-    title.add_component(title_text);
     title.add_component(bg_music);
-
-    Move move;
-    MoveSideToSide movesidetoside;
-    title.add_component(movesidetoside);
 
     AnimationControllerComponent animCtrl;
 
-    AnimationComponent boyAnimationStanding("boy.png", 3, 2, 0.5, true );
+    AnimationComponent boyAnimationStanding("sprites.png", 12, 16, 0.25, true );
     boyAnimationStanding.set_end_frame(0);
     animCtrl.add_animation("standing", boyAnimationStanding);
 
-    AnimationComponent boyAnimationStandingUpside("boy_upsidedown.png", 3, 2 , 0.5, true);
-    boyAnimationStandingUpside.set_end_frame(0);
+    AnimationComponent boyAnimationStandingUpside("sprites.png", 12, 16, 0.25, true);
+    boyAnimationStandingUpside.set_frame_range(6, 6);
     animCtrl.add_animation("standing_upside", boyAnimationStandingUpside);
 
-    AnimationComponent boyAnimation("boy.png", 3, 2, 0.5, true);
+    AnimationComponent boyAnimation("sprites.png", 12, 16, 0.25, true);
     boyAnimation.set_end_frame(2);
     animCtrl.add_animation("run_r", boyAnimation);
 
-    AnimationComponent boyAnimation2("boy.png", 3, 2, 0.5, true);
+    AnimationComponent boyAnimation2("sprites.png", 12, 16, 0.25, true);
     boyAnimation2.set_frame_range(3, 5);
     animCtrl.add_animation("run_l", boyAnimation2);
 
-    AnimationComponent boyAnimation3("boy_upsidedown.png", 3, 2, 0.5, true);
-    boyAnimation3.set_end_frame(2);
+    AnimationComponent boyAnimation3("sprites.png", 12, 16, 0.25, true);
+    boyAnimation3.set_frame_range(6, 8);
     animCtrl.add_animation("run_l_upside", boyAnimation3);
 
-    AnimationComponent boyAnimation4("boy_upsidedown.png", 3, 2, 0.5, true);
-    boyAnimation4.set_frame_range(3, 5);
+    AnimationComponent boyAnimation4("sprites.png", 12, 16, 0.25, true);
+    boyAnimation4.set_frame_range(9, 11);
     animCtrl.add_animation("run_r_upside", boyAnimation4);
 
     player.add_component(move);
