@@ -33,9 +33,19 @@ bool ImageComponent::init()
     return true;
 }
 
-void ImageComponent::change_pos(int pos_x, int pos_y){
+void ImageComponent::change_pos_canvas(int pos_x, int pos_y){
+    m_canvas_rect.x = pos_x;
+    m_canvas_rect.y = pos_y;
+}
+
+void ImageComponent::change_pos_image(int pos_x, int pos_y){
     m_image_rect.x = pos_x;
     m_image_rect.y = pos_y;
+}
+
+void ImageComponent::resize_rect(int size_w, int size_h){
+    m_image_rect.w = size_w;
+    m_image_rect.h = size_h;
 }
 
 bool ImageComponent::shutdown()

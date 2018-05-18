@@ -10,13 +10,13 @@ class Move : public engine::CodeComponent
 {
   public:
     Move() : engine::CodeComponent() {}
-    double gravity = 2;
+    double gravity = 4;
     bool is_moving = true;  
     bool toggle = false;
     bool upside_down = false;
 
-    int relative_x = engine::Game::instance.window_size().first - 32;
-    int relative_y = engine::Game::instance.window_size().second - 32;
+    int relative_x = engine::Game::instance.window_size().first - 64;
+    int relative_y = engine::Game::instance.window_size().second - 64;
 
     void update()
     {

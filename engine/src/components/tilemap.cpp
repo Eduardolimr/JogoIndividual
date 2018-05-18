@@ -10,11 +10,6 @@ using namespace engine;
 
 bool TileMapComponent::init(){
     INFO("Init TileMapComponent");
-    if(m_path == ""){
-        WARN("Invalid path for tilemap!");
-        return false;
-    }
-    create_tilemap();
     return true;
 }
 
@@ -32,20 +27,23 @@ void TileMapComponent::add_tile(std::string name, int pos_x, int pos_y){
 }
 
 tileset TileMapComponent::get_tile(std::string name){
+    tileset error;
     auto search = m_tilemap.find(name);
     if(search != m_tilemap.end()){
         return search->second;
     }
     WARN("Tile does not exist!");
-    return m_tilemap.end()->second;
+    error.x = 0;
+    error.y = 0;
+    return error;
 }
 
 void TileMapComponent::create_tilemap(){
-    auto cont = 0;
-    for(auto pos_y = 0; pos_y <= 240; pos_y += 8){
-        for(auto pos_x = 0; pos_x <= 320; pos_x += 8){
-            INFO(std::to_string(cont));
+    int cont = 0;
+    for(int pos_y = 0; pos_y <= 240; pos_y += 8){
+        for(int pos_x = 0; pos_x <= 320; pos_x += 8){
             add_tile(std::to_string(cont), pos_x, pos_y);
+            cont++;
         }
     }
 }

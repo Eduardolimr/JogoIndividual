@@ -16,8 +16,8 @@ typedef struct tileset{
 namespace engine{
     class TileMapComponent: public Component{
     public:
-        TileMapComponent(std::string path="")
-            : Component(), m_path(path) {}
+        TileMapComponent()
+            : Component() {}
 
         virtual ~TileMapComponent() {}
 
@@ -25,12 +25,10 @@ namespace engine{
         virtual bool shutdown();
         virtual void add_tile(std::string name, int pos_x, int pox_y);
         tileset get_tile(std::string name);
+        void create_tilemap();
     protected:
-        std::string m_path;
-        int m_w, m_h;
 
         std::map<std::string, tileset> m_tilemap;
-        void create_tilemap();
     };
 }
 

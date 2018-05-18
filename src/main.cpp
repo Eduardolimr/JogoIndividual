@@ -27,10 +27,12 @@ int main(int, char**)
     player.set_position(0, 0);
 
     auto map = GameObject("Map", 2, 0);
+    map.set_position(0, 0);
 
     AnimationControllerComponent animCtrl;
     Move move;
-    TileMapComponent tilemap("tiles.png");
+    TileMapComponent tilemap;
+    GameMap game_map;
 
     AnimationComponent boyAnimationStanding("sprites.png", 12, 16, 0.25, true );
     boyAnimationStanding.set_end_frame(0);
@@ -57,6 +59,7 @@ int main(int, char**)
     animCtrl.add_animation("run_l_upside", boyAnimation4);
 
     map.add_component(tilemap);
+    map.add_component(game_map);
     player.add_component(move);
     player.add_component(boyAnimationStanding);
     player.add_component(boyAnimationStandingUpside);
